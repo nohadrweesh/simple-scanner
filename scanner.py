@@ -2,13 +2,17 @@ def check_last_token_type(token, token_type):
     if len(token) > 0 and token.isspace() == False:
         if token_type == 2:
             if token in reserved_words:
+                tokens.append({token: 'reserved word'})
                 output_file.write(token + "  :reserved word\n")
             else:
+                tokens.append({token: 'identifier'})
                 output_file.write(token + "  :identifier\n")
         elif token_type == 3:
+            tokens.append({token: 'number'})
             output_file.write(token + "  :number\n")
         elif token_type == 4:
             if token in special_symbols:
+                tokens.append({token: 'special symbol'})
                 output_file.write(token + "  :special symbol\n")
 
 inpFile = 'tiny_sample_code.txt'
@@ -17,6 +21,8 @@ outFile = 'scanner_output.txt'
 # variables
 reserved_words = ['if', 'then', 'else', 'end', 'repeat', 'until', 'read', 'write']
 special_symbols = ['+', '-', '/', '*', '=', '<', '(', ')', ';', ':', ':=']
+
+tokens = []
 
 with open(inpFile, 'r')as input_file:
     with open(outFile, 'w')as output_file:
@@ -64,3 +70,4 @@ with open(inpFile, 'r')as input_file:
                 token_type = 3
                 token += char
         check_last_token_type(token, token_type)
+        # print(tokens)
